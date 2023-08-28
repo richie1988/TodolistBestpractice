@@ -68,7 +68,7 @@ function addTask(description) {
   const newTask = {
     description,
     completed: false,
-    index: newIndex
+    index: newIndex,
   };
 
   tasks.push(newTask);
