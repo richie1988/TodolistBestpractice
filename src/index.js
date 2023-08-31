@@ -2,7 +2,7 @@
 import './style.css';
 import clearCompletedTasks from './statusUtils.js';
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
 function saveTasks() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -100,7 +100,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const clearButton = document.querySelector('.clear-btn');
   clearButton.addEventListener('click', () => {
-    tasks = clearCompletedTasks(tasks);
+    clearCompletedTasks(tasks);
     renderTasks();
   });
 });
+
+export { tasks };
+export function editTaskDescription(indexToEdit, newDescription) {
+  tasks[indexToEdit - 1].description = newDescription;
+  saveTasks();
+  renderTasks();
+}
+
+export function updateTaskStatus(taskIndex, completed) {
+  tasks[taskIndex - 1].completed = completed;
+  saveTasks();
+  renderTasks();
+}
