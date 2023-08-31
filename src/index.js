@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
-import './style.css';
-import clearCompletedTasks from './statusUtils.js';
+import "./style.css";
+import clearCompletedTasks from "./statusUtils.js";
 
-const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-function saveTasks() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+export function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 export function deleteTask(indexToDelete) {
@@ -20,11 +20,11 @@ export function deleteTask(indexToDelete) {
 }
 
 function createDeleteButton(index) {
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'X';
-  deleteButton.classList.add('delete-button');
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "X";
+  deleteButton.classList.add("delete-button");
 
-  deleteButton.addEventListener('click', () => {
+  deleteButton.addEventListener("click", () => {
     deleteTask(index);
   });
 
@@ -32,19 +32,19 @@ function createDeleteButton(index) {
 }
 
 export function renderTasks() {
-  const todoList = document.getElementById('todo-list');
+  const todoList = document.getElementById("todo-list");
 
   tasks.sort((a, b) => a.index - b.index);
 
-  todoList.innerHTML = '';
+  todoList.innerHTML = "";
 
   tasks.forEach((task, index) => {
-    const taskItem = document.createElement('li');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
+    const taskItem = document.createElement("li");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
     checkbox.checked = task.completed;
 
-    checkbox.addEventListener('change', () => {
+    checkbox.addEventListener("change", () => {
       task.completed = checkbox.checked;
       saveTasks();
       renderTasks();
@@ -52,11 +52,11 @@ export function renderTasks() {
 
     taskItem.appendChild(checkbox);
 
-    const descriptionSpan = document.createElement('span');
+    const descriptionSpan = document.createElement("span");
     descriptionSpan.textContent = task.description;
 
     if (task.completed) {
-      descriptionSpan.classList.add('completed');
+      descriptionSpan.classList.add("completed");
     }
 
     taskItem.appendChild(descriptionSpan);
@@ -85,21 +85,21 @@ export function addTask(description) {
   renderTasks();
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   renderTasks();
 
-  const addButton = document.querySelector('.add-btn');
-  const addInput = document.querySelector('.add-todo');
+  const addButton = document.querySelector(".add-btn");
+  const addInput = document.querySelector(".add-todo");
 
-  addButton.addEventListener('click', () => {
-    if (addInput.value.trim() !== '') {
+  addButton.addEventListener("click", () => {
+    if (addInput.value.trim() !== "") {
       addTask(addInput.value.trim());
-      addInput.value = '';
+      addInput.value = "";
     }
   });
 
-  const clearButton = document.querySelector('.clear-btn');
-  clearButton.addEventListener('click', () => {
+  const clearButton = document.querySelector(".clear-btn");
+  clearButton.addEventListener("click", () => {
     clearCompletedTasks(tasks);
     renderTasks();
   });
