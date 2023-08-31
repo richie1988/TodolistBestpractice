@@ -1,4 +1,4 @@
-//
+// crear function to clear all task completed
 export default function clearCompletedTasks(tasks) {
   const updatedTasks = tasks.filter((task) => !task.completed);
 

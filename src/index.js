@@ -4,20 +4,31 @@ import clearCompletedTasks from './statusUtils.js';
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-function saveTasks() {
+export function saveTasks() {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 export function deleteTask(indexToDelete) {
-  tasks.splice(indexToDelete, 1);
-  // Update the indices of the remaining tasks
-  for (let i = indexToDelete; i < tasks.length; i += 1) {
-    tasks[i].index = i + 1;
-  }
+  tasks = tasks.filter((task, index) => index !== indexToDelete);
+  tasks = tasks.map((task, index) => {
+    task.index = index + 1;
+    return task;
+  });
 
   saveTasks();
   renderTasks();
 }
+
+// export function deleteTask(indexToDelete) {
+//   tasks.splice(indexToDelete, 1);
+//   // Update the indices of the remaining tasks
+//   for (let i = indexToDelete; i < tasks.length; i += 1) {
+//     tasks[i].index = i + 1;
+//   }
+
+//   saveTasks();
+//   renderTasks();
+// }
 
 function createDeleteButton(index) {
   const deleteButton = document.createElement('button');
@@ -104,3 +115,15 @@ window.addEventListener('DOMContentLoaded', () => {
     renderTasks();
   });
 });
+
+export function editTaskDescription(indexToEdit, newDescription) {
+  tasks[indexToEdit - 1].description = newDescription;
+  saveTasks();
+  renderTasks();
+}
+
+export function updateTaskStatus(taskIndex, completed) {
+  tasks[taskIndex - 1].completed = completed;
+  saveTasks();
+  renderTasks();
+}
